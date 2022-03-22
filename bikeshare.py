@@ -33,7 +33,7 @@ def get_filters():
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
     print('Hello! Let\'s explore some US bikeshare data!')
-    # get user input for city (chicago, new york city, washington). 
+    # get user input for city (chicago, new york city, washington).
     city = ''
     while city.lower().strip() not in CITY_DATA.keys():
         city = input("Choose a city: ").lower().strip()
@@ -41,7 +41,7 @@ def get_filters():
             print("Use one of the following: Chicago, New York City, Washington")
         else:
             city = city.lower().strip()
-    
+
     # get user input for month (all, january, february, ... , june)
     month = ''
     while month.lower().strip() not in MONTH_DATA:
@@ -51,7 +51,7 @@ def get_filters():
             print(*[m.title() for m in MONTH_DATA[-12:]],sep=', ')
         else:
             month = month.lower().strip()
-    
+
     # get user input for day of week (all, monday, tuesday, ... sunday)
     day = ''
     while day.lower().strip() not in DAY_DATA:
@@ -77,25 +77,25 @@ def load_data(city, month, day):
     """
     # creates the dataframe 'df'
     df = pd.read_csv(CITY_DATA[city])
-    
+
     # names the unnamed column
     df = df.rename(columns={"Unnamed: 0":"ID"})
-    
+
     # casts the 'End Time' column as datetime
     time_col = 'End Time'
     if time_col in df.columns:
         df[time_col] = pd.to_datetime(df[time_col])
-        
+
     # casts the 'Start Time' column as datetime and filters below
     time_col = 'Start Time'
-    
+
     if time_col in df.columns:
         df[time_col] = pd.to_datetime(df[time_col])
-            
+
         # filters 'df' against the chosen month except when month is 'all'
         if month != 'all':
             df = df[df[time_col].dt.month == MONTH_DATA.index(month)]
-        
+
         # filters 'df' against the chosen day except when day is 'all'
         if day != 'all':
             df = df[df[time_col].dt.dayofweek == DAY_DATA.index(day)]
@@ -106,19 +106,19 @@ def load_data(city, month, day):
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
     trip_start = 'Start Time'
-    
+
     if trip_start in df.columns:
         print('\nCalculating The Most Frequent Times of Travel...\n')
         start_time = time.time()
-        
+
         # display the most common month
         month_mode = MONTH_DATA[df[trip_start].dt.month.mode()[0]].title()
         print('The most common rental month of the year:\t', month_mode)
-    
+
         # display the most common day of week
         day_mode = DAY_DATA[df[trip_start].dt.dayofweek.mode()[0]].title()
         print('The most common rental day of the week:\t\t', day_mode)
-    
+
         # display the most common start hour
         hr_mode = df[trip_start].dt.hour.mode()[0]
         if hr_mode < 12:
@@ -126,7 +126,7 @@ def time_stats(df):
         else:
             hr_mode = str(hr_mode%12) + ' PM'
         print('The most common rental hour of the day:\t\t', hr_mode)
-        
+
         print_total_time(start_time)
     else:
         print_no_info(trip_start)
@@ -141,7 +141,7 @@ def station_stats(df):
     end_stn = 'End Station'
     start_bool = True
     end_bool = True
-    
+
     if start_stn in df.columns:
         # display most commonly used start station
         start_station = df[start_stn].mode()[0].title()
@@ -157,7 +157,7 @@ def station_stats(df):
     else:
         print_no_info(start_stn)
         end_bool = False
-    
+
     # display most frequent combination of start station and end station trip
     start_end = 'most common start, end station combination'
     if end_stn in df.columns and start_stn in df.columns:
@@ -176,16 +176,16 @@ def station_stats(df):
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
     travel_time = 'Trip Duration'
-    
+
     if travel_time in df.columns:
         print('\nCalculating Trip Duration...\n')
         start_time = time.time()
-        
+
         # display total travel time
         total_trip = df[travel_time].sum()
         print('Total of all trip times:\n\t{} seconds or {}'.format(total_trip
                                                                     ,recast_time(total_trip)))
-                    
+
         # display mean travel time
         mean_trip = df[travel_time].mean()
         print('Mean for all trip times:\n\t{} seconds or {}'.format(round(mean_trip,1)
@@ -205,12 +205,12 @@ def recast_time(total_time):
     m, s = divmod(total_time, 60)
     h, m = divmod(m, 60)
     dy, h = divmod(h, 24)
-    
+
     hms = f'{h:d}:{m:02d}:{s:02d}'
     days = ''
     if dy > 0:
         days = f'{dy:d} days '
-    
+
     return '{}{}{}'.format(days,hms,str(dec_time)[-2:])
 
 def user_stats(df):
@@ -218,7 +218,7 @@ def user_stats(df):
     user_type = 'User Type'
     gender = 'Gender'
     birth_year = 'Birth Year'
-    
+
     gender_dict = {'Male': 'Male', 'Female':'Female', np.nan:'No Gender'}
 
     print('\nCalculating User Stats...\n')
@@ -249,7 +249,7 @@ def user_stats(df):
         print('\nRows without a birth year:\t', df[birth_year].isnull().sum())
     else:
         print_no_info(birth_year)
-        
+
     print_total_time(start_time)
 
 def print_total_time(start_time):
@@ -265,7 +265,7 @@ def display_data(df):
     view_data = input('\nWould you like to view 5 rows of individual trip data?\nEnter yes or no: ').strip().lower()
     if view_data == 'no':
         keep = False
-    
+
     while keep:
         while view_data not in option:
             view_data = input('Enter yes or no: ').strip().lower()
@@ -279,17 +279,17 @@ def display_data(df):
                 keep = False
 
 def main():
-    """ 
+    """
     The main loops if the user enters yes after each run.
     It stops if the users enters no.
     Otherwise, it keeps asking for an appropriate input.
-    
+
     """
-    keep = True 
+    keep = True
     while keep:
         # requests input from the user
         city, month, day = get_filters()
-        
+
         # applies user input to create a dataframe
         df = load_data(city, month, day)
         display_data(df)
@@ -299,7 +299,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-        
+
         # loop that runs until the user types yes or no as an input
         restart = ''
         while restart.lower().strip() not in option:
@@ -312,3 +312,4 @@ def main():
 
 if __name__ == "__main__":
 	main()
+    # End
