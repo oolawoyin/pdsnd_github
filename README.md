@@ -21,5 +21,3 @@ Changed master branch to documentation.
 ### Modified Date
 Made some changes to the README file 3.22.2022
 
-### Date Refactoring branch was created
-Created 3/22/2022
