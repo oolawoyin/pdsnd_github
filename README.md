@@ -24,3 +24,6 @@ Made some changes to the README file 3.22.2022
 ### Modified Date
 Changes made to refactor.README.md file 3.23.2022
 
+### Documentation Comments
+Made changes to the README.md file by filling out the headers provided appropriately
+
