@@ -1,19 +1,19 @@
 >**Note**: Please **fork** the current Udacity repository so that you will have a **remote** repository in **your** Github account. Clone the remote repository to your local machine. Later, as a part of the project "Post your Work on Github", you will push your proposed changes to the remote repository in your Github account.
 
 ### Date created
-Include the date you created this project and README file.
+03/23/2022
 
 ### Project Title
-Replace the Project Title
+oolawoyin/pdsnd_github
 
 ### Description
-Describe what your project is about and what it does
+This is a project to learn how to use GitBash and Github
 
 ### Files used
-Include the files used
+I used bikeshare.py, README.md, and the following CSV data files: chicago.csv, new_york_city.csv, washington.csv
 
 ### Credits
-It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
+There was a collaboration between me and my Mentor(fellow programmer)
 
 ### Documentation
 Changed master branch to documentation.
